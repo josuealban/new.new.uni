@@ -64,13 +64,29 @@ async function main() {
         // ==========================================
         console.log('\n--- 3. Consultas Nativas (SQL) ---');
 
-        // Lectura de datos usando SQL puro
-        // Útil para reportes complejos o optimizaciones específicas
+        // REPORTE SOLICITADO:
+        // Nombre del estudiante, Carrera, Número total de materias matriculadas
+        // Ordenado por número de materias (descendente)
         try {
-            const activeStudentsCount: any = await prisma.$queryRaw`SELECT count(*)::int as count FROM students WHERE is_active = true`;
-            console.log(`✅ SQL Nativo (Conteo estudiantes activos): ${activeStudentsCount[0].count}`);
+            console.log('📊 Generando reporte de estudiantes y materias matriculadas...');
+            const studentReport: any[] = await prisma.$queryRaw`
+                SELECT 
+                    s.first_name || ' ' || s.last_name as "Nombre Estudiante",
+                    c.name as "Carrera",
+                    COUNT(e.id)::int as "Total Materias"
+                FROM students s
+                JOIN careers c ON s.career_id = c.id
+                LEFT JOIN enrollments e ON s.id = e.student_id
+                GROUP BY s.id, s.first_name, s.last_name, c.name
+                ORDER BY "Total Materias" DESC
+                LIMIT 5;
+            `;
+
+            console.table(studentReport);
+            console.log(`✅ SQL Nativo Reporte: ${studentReport.length} filas recuperadas.`);
+
         } catch (e) {
-            console.log('⚠️ SQL Nativo: No se pudo ejecutar (verificar conexión a DB)');
+            console.log('⚠️ SQL Nativo Reporte: Error al ejecutar:', e);
         }
 
 
@@ -78,42 +94,69 @@ async function main() {
         // 4. Transacciones y Principios ACID
         // ==========================================
         console.log('\n--- 4. Transacciones (ACID) ---');
-        console.log('ℹ️ ACID: Atomicidad, Consistencia, Aislamiento, Durabilidad.');
+        console.log('ℹ️ Caso de Uso: Matriculación con validación de cupos (Atomicidad garantizada).');
 
-        // $transaction asegura Atomicidad: Todas las operaciones dentro pasan, o ninguna pasa.
-        if (careers.length > 0) {
-            const timestamp = Date.now();
-            const randomUserId = Math.floor(Math.random() * 100000);
+        const txStudent = await prisma.student.findFirst({ where: { isActive: true } });
+        const txSubject = await prisma.subject.findFirst({ where: { availableQuota: { gt: 0 } } });
+        const txPeriod = await prisma.academicPeriod.findFirst({ where: { isActive: true } });
 
+        if (txStudent && txSubject && txPeriod) {
             try {
                 const result = await prisma.$transaction(async (tx) => {
-                    // Paso A: Crear Estudiante
-                    const newStudent = await tx.student.create({
-                        data: {
-                            firstName: 'Estudiante',
-                            lastName: `DemoTransaccion`,
-                            email: `demo.${timestamp}@test.com`,
-                            phone: '555-0199',
-                            userId: randomUserId, // Simulación ID usuario externo
-                            careerId: careers[0].id
-                        }
-                    });
-                    console.log(`   -> Paso A: Estudiante creado en memoria (ID: ${newStudent.id})`);
-
-                    // Paso B: Validar algo (Simulando lógica de negocio)
-                    // Si lanzamos un error aquí, el estudiante del Paso A JAMÁS se guardará en la DB (Rollback automático)
-                    if (!newStudent.email.includes('@')) {
-                        throw new Error("Email inválido, abortando transacción.");
+                    // Paso 1: Verificar estudiante activo (Bloqueo pesimista opcional, aquí validación lógica)
+                    // En una transacción real, podríamos volver a consultar para asegurar estado actual.
+                    const studentCheck = await tx.student.findUnique({ where: { id: txStudent.id } });
+                    if (!studentCheck?.isActive) {
+                        throw new Error(`Estudiante ${studentCheck?.id} no está activo.`);
                     }
 
-                    return newStudent;
+                    // Paso 2: Verificar disponibilidad de cupos (LOWER LEVEL LOCKING recommended for production, here logic check)
+                    // Para mayor seguridad en concurrencia real se usaría UPDATE ... WHERE available_quota > 0 con chequeo de filas afectadas.
+                    const subjectCheck = await tx.subject.findUnique({ where: { id: txSubject.id } });
+                    if (!subjectCheck || subjectCheck.availableQuota <= 0) {
+                        throw new Error(`Asignatura ${txSubject.name} sin cupos disponibles.`);
+                    }
+
+                    // Paso 3: Registrar matrícula
+                    const newEnrollment = await tx.enrollment.create({
+                        data: {
+                            studentId: txStudent.id,
+                            subjectId: txSubject.id,
+                            academicPeriodId: txPeriod.id
+                        }
+                    });
+
+                    // Paso 4: Descontar cupo
+                    await tx.subject.update({
+                        where: { id: txSubject.id },
+                        data: {
+                            availableQuota: {
+                                decrement: 1
+                            }
+                        }
+                    });
+
+                    // Simulación de error aleatorio para probar ROLLBACK (50% probabilidad en demo)
+                    // if (Math.random() < 0.5) throw new Error("Error simulado de red durante el cobro.");
+
+                    return newEnrollment;
                 });
-                console.log(`✅ Transacción COMMIT: Los datos se persistieron correctamente.`);
+
+                console.log(`✅ Transacción EXITOSA (COMMIT):`);
+                console.log(`   - Estudiante ID ${txStudent.id} matriculado en materia ID ${txSubject.id}.`);
+                console.log(`   - Cupo descontado correctamente.`);
+
             } catch (error) {
-                console.log(`❌ Transacción ROLLBACK: Ocurrió un error y se deshicieron los cambios. Mensaje: ${error.message}`);
+                // Si falla por "Foreign Key constraint failed" es porque ya está matriculado (Unique constraint)
+                if (error.code === 'P2002') {
+                    console.log(`ℹ️ Transacción abortada: El estudiante ya está matriculado en esta materia (Constraint Unique).`);
+                } else {
+                    console.log(`❌ Transacción FALLIDA (ROLLBACK): ${error.message}`);
+                    console.log(`   - Ningún cambio se aplicó a la base de datos (Cupo intacto).`);
+                }
             }
         } else {
-            console.log('⚠️ Saltando demo de transacción: No hay carreras para asociar.');
+            console.log('⚠️ No se pudo probar la transacción de matrícula: Faltan datos semilla (estudiante, materia o periodo).');
         }
 
     } catch (error) {
