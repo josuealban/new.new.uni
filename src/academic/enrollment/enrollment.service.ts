@@ -89,8 +89,21 @@ export class EnrollmentService {
 
             if (!current) throw new NotFoundException(`Enrollment with ID ${id} not found`);
 
-            // If subject changes, handle quota transfer
+            // Verify no duplicate enrollment if subject changes
             if (updateEnrollmentDto.subjectId && updateEnrollmentDto.subjectId !== current.subjectId) {
+                const duplicate = await tx.enrollment.findUnique({
+                    where: {
+                        studentId_subjectId_academicPeriodId: {
+                            studentId: current.studentId,
+                            subjectId: updateEnrollmentDto.subjectId,
+                            academicPeriodId: current.academicPeriodId,
+                        },
+                    },
+                });
+                if (duplicate) {
+                    throw new ConflictException(`Student is already enrolled in the new subject for this period`);
+                }
+
                 // Verify new subject has quota
                 const newSubject = await tx.subject.findUnique({
                     where: { id: updateEnrollmentDto.subjectId }
@@ -111,10 +124,17 @@ export class EnrollmentService {
                 });
             }
 
-            return tx.enrollment.update({
-                where: { id },
-                data: updateEnrollmentDto,
-            });
+            try {
+                return await tx.enrollment.update({
+                    where: { id },
+                    data: updateEnrollmentDto,
+                });
+            } catch (error) {
+                if (error.code === 'P2002') {
+                    throw new ConflictException(`Final update failed: Student already enrolled in this combination`);
+                }
+                throw error;
+            }
         });
     }
 

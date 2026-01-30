@@ -1,15 +1,15 @@
 # Resumen General de Documentación y Flujo de Datos
 
-Este documento sirve como índice maestro y resumen ejecutivo de toda la documentación técnica generada para el sistema académico. Consolida el conocimiento de los 12 documentos creados para facilitar el estudio y la presentación del proyecto.
+Este documento sirve como índice maestro y resumen ejecutivo de toda la documentación técnica generada para el sistema académico. Consolida el conocimiento de los 13 documentos creados para facilitar el estudio y la presentación del proyecto.
 
 ---
 
 ## 📚 Índice de Documentos (Resumen Ejecutivo)
 
 ### 🛠️ Guías de Operación
-1.  **[Guia_Comandos_PowerShell.md](file:///c:/dev/reinicio_uni/instructivo%20y%20material%20de%20apoyo/Guia_Comandos_PowerShell.md):** Fundamentos de Git, NPM y comandos básicos del entorno.
-2.  **[Guia_Comandos_Consultas.md](file:///c:/dev/reinicio_uni/instructivo%20y%20material%20de%20apoyo/Guia_Comandos_Consultas.md):** Catálogo de comandos para probar cada endpoint del sistema.
-3.  **[Historial_de_Consultas.md](file:///c:/dev/reinicio_uni/instructivo%20y%20material%20de%20apoyo/Historial_de_Consultas.md):** Bitácora cronológica de todas las pruebas y cambios realizados.
+1.  **[Guia_Comandos_PowerShell.md](file:///c:/dev/reinicio_uni/instructivo y material de apoyo/Guia_Comandos_PowerShell.md):** Fundamentos de Git, NPM y comandos básicos del entorno.
+2.  **[Guia_Comandos_Consultas.md](file:///c:/dev/reinicio_uni/instructivo y material de apoyo/Guia_Comandos_Consultas.md):** Catálogo de comandos para probar cada endpoint del sistema.
+3.  **[Historial_de_Consultas.md](file:///c:/dev/reinicio_uni/instructivo y material de apoyo/Historial_de_Consultas.md):** Bitácora cronológica de todas las pruebas y cambios realizados.
 
 ### 🔬 Explicaciones por Componente
 4.  **[Explicacion_Consultas_Derivadas.md](file:///c:/dev/reinicio_uni/instructivo%20y%20material%20de%20apoyo/Explicacion_Consultas_Derivadas.md):** Detalle de la Parte 1 (ORM `findMany`).
@@ -23,8 +23,9 @@ Este documento sirve como índice maestro y resumen ejecutivo de toda la documen
 10. **[Como_Encontrar_Endpoints.md](file:///c:/dev/reinicio_uni/instructivo%20y%20material%20de%20apoyo/Como_Encontrar_Endpoints.md):** Guía visual para navegar por el código fuente de NestJS.
 
 ### 🎤 Material de Defensa
-11. **[Guia_Explicacion_Verbal.md](file:///c:/dev/reinicio_uni/instructivo%20y%20material%20de%20apoyo/Guia_Explicacion_Verbal.md):** Guión y puntos clave para explicar el proyecto al ingeniero.
-12. **[Referencia_Ubicacion_Codigo.md](file:///c:/dev/reinicio_uni/instructivo%20y%20material%20de%20apoyo/Referencia_Ubicacion_Codigo.md):** Mapa exacto de archivos y líneas de código por cada funcionalidad.
+11. **[Guia_Explicacion_Verbal.md](file:///c:/dev/reinicio_uni/instructivo y material de apoyo/Guia_Explicacion_Verbal.md):** Guión y puntos clave para explicar el proyecto al ingeniero.
+12. **[Referencia_Ubicacion_Codigo.md](file:///c:/dev/reinicio_uni/instructivo y material de apoyo/Referencia_Ubicacion_Codigo.md):** Mapa exacto de archivos y líneas de código por cada funcionalidad.
+13. **[Posibles_Preguntas_Defensa.md](file:///c:/dev/reinicio_uni/instructivo y material de apoyo/Posibles_Preguntas_Defensa.md):** Listado de 10 preguntas técnicas con sus respuestas sugeridas.
 
 ---
 
