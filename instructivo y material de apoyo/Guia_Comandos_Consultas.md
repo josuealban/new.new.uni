@@ -1,81 +1,155 @@
-# Guía de Comandos PowerShell para Consultas y Operaciones Avanzadas en NestJS
+# Guía de Comandos PowerShell para Consultas - Actividad Práctica
 
-Este documento detalla cómo ejecutar y probar las diferentes operaciones de base de datos (derivadas, nativas, transaccionales) utilizando PowerShell. Se asume que la aplicación se está ejecutando en `http://localhost:3000`.
+Este documento contiene todos los comandos PowerShell para ejecutar las consultas implementadas en las Partes 1, 2 y 3 de la actividad práctica.
 
-Primero, asegúrate de que tu aplicación esté corriendo:
+**Requisito previo:** Asegúrate de que tu aplicación esté corriendo en `http://localhost:3000`
 ```powershell
 npm run start:dev
 ```
 
 ---
 
-## 1. Consultas Derivadas (ORM)
-**Concepto:** Consultas construidas utilizando los métodos estándar de Prisma (`findMany`, `findUnique`) con relaciones (`include`).
+## PARTE 1: Consultas Derivadas (ORM)
 
-### Listar matrículas de un estudiante en un periodo específico
-**Función:** Esta consulta utiliza `findMany` con filtros `where` para buscar matrículas específicas.
-**Comando PowerShell:**
+### 1.1 Listar Estudiantes Activos con su Carrera
+**Endpoint:** `GET /academic/students/status/active`
 ```powershell
+Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/students/status/active"
+```
+
+### 1.2 Obtener Materias de una Carrera Específica
+**Endpoint:** `GET /academic/subjects/career/:careerId`
+```powershell
+# Materias de la carrera con ID 1
+Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/subjects/career/1"
+```
+
+### 1.3 Listar Docentes que Imparten Más de una Asignatura
+**Endpoint:** `GET /academic/teachers/status/multi-subject`
+```powershell
+Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/teachers/status/multi-subject"
+```
+
+### 1.4 Matrículas de un Estudiante en un Período Académico
+**Endpoint:** `GET /academic/enrollments/student/:studentId/period/:periodId`
+```powershell
+# Matrículas del estudiante 1 en el período 1
 Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/enrollments/student/1/period/1"
 ```
-*(Nota: Reemplaza `1` por el ID real del estudiante y periodo)*
 
 ---
 
-## 2. Consultas Nativas (SQL Puro)
-**Concepto:** Consultas escritas directamente en SQL utilizando `$queryRaw` para reportes complejos o rendimiento.
+## PARTE 2: Operaciones Lógicas (AND, OR, NOT)
 
-### Obtener reporte de estadísticas (Ejemplo)
-**Función:** Ejecuta una consulta SQL nativa (`SELECT ... FROM ... JOIN`) definida en el servicio para obtener estadísticas de matriculación.
-**Comando PowerShell:**
+### 2.1 Búsqueda Avanzada de Estudiantes (AND múltiple)
+**Condiciones:** Activos AND Carrera específica AND Matriculados en período
+**Endpoint:** `GET /academic/students/search/advanced?careerId=X&periodId=Y`
 ```powershell
+# Estudiantes activos de la carrera 1, matriculados en el período 1
+Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/students/search/advanced?careerId=1&periodId=1"
+```
+
+### 2.2 Filtro Avanzado de Docentes (AND + OR + NOT)
+**Condiciones:** Tiempo completo AND (Dicten materias OR NOT inactivos)
+**Endpoint:** `GET /academic/teachers/filter/advanced`
+```powershell
+# Docentes de tiempo completo que dicten asignaturas o estén activos
+Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/teachers/filter/advanced"
+```
+
+---
+
+## PARTE 3: Consultas Nativas (SQL)
+
+### 3.1 Reporte de Estudiantes con Total de Materias
+**Descripción:** Consulta SQL nativa con JOIN, GROUP BY y ORDER BY
+**Endpoint:** `GET /academic/enrollments/report/native-stats`
+```powershell
+# Reporte ordenado por número de materias (descendente)
 Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/enrollments/report/native-stats"
 ```
 
+**Campos devueltos:**
+- `studentName`: Nombre completo del estudiante
+- `careerName`: Nombre de la carrera
+- `totalSubjects`: Total de materias matriculadas
+
 ---
 
-## 3. Operaciones Lógicas (Filtros Avanzados)
-**Concepto:** Uso de operadores `AND`, `OR`, `NOT`, `gte` (mayor o igual), `contains` dentro de las consultas.
+## EXTRA: Script Demo Completo
 
-### Probar filtros lógicos (Script Demo)
-**Función:** Ejecuta un script de demostración que realiza búsquedas con filtros complejos (ej. buscar profesores por nombre O tipo de empleo).
-**Comando PowerShell:**
+Si deseas ejecutar **todas** las consultas de una vez (incluidas transacciones ACID), puedes usar el script de demostración:
+
 ```powershell
+# Ejecuta demo con todas las consultas (Derivadas, Lógicas, Nativas, Transacciones, ACID)
 npx ts-node src/demo-queries.ts
 ```
-*(Observar la sección "2. Operaciones Lógicas" en la salida de la consola)*
+
+Este script incluye:
+- ✅ Consultas derivadas (findMany, include, where)
+- ✅ Operaciones lógicas (AND, OR, NOT)
+- ✅ Consultas nativas ($queryRaw, $executeRaw)
+- ✅ Transacciones ACID (con validación y rollback)
+- ✅ Reporte de docentes con múltiples asignaturas
 
 ---
 
-## 4. Operaciones Transaccionales y Principios ACID
-**Concepto:** Garantizar que un conjunto de operaciones se ejecuten todas o ninguna (`Atomicidad`), manteniendo la integridad de los datos (`Consistencia`).
+## PARTE 4: Transacciones ACID (Bonus)
 
-### Crear una Matrícula (Transacción con Validación de Cupos)
-**Función:** Intenta matricular a un estudiante. El backend utiliza `prisma.$transaction` para verificar cupos, crear la matrícula y descontar el cupo atómicamente.
-**Comando PowerShell:**
+### 4.1 Crear Matrícula con Transacción
+**Descripción:** Crea una matrícula verificando cupos atómicamente
+**Endpoint:** `POST /academic/enrollments`
 ```powershell
 $body = @{
     studentId = 1
-    subjectId = 2
+    subjectId = 1
     academicPeriodId = 1
 } | ConvertTo-Json
 
 Invoke-RestMethod -Method Post -Uri "http://localhost:3000/academic/enrollments" -Body $body -ContentType "application/json"
 ```
 
-### Simulación de Fallo (Rollback)
-Para verificar la propiedad de **Atomicidad** (ACID):
-1. Intenta matricularte en una materia sin cupos.
-2. O modifica el código para lanzar un error intencional dentro de la transacción.
-3. Verifica que no se haya cobrado ni descontado cupo si falla.
+**Propiedades ACID garantizadas:**
+- **Atomicidad:** Si falla alguna validación, no se crea la matrícula ni se descuenta el cupo.
+- **Consistencia:** Se verifican reglas de negocio (cupos disponibles, estudiante activo).
+- **Aislamiento:** Múltiples solicitudes concurrentes no causan condiciones de carrera.
+- **Durabilidad:** Una vez confirmada, la matrícula persiste permanentemente.
 
 ---
 
-## 5. Resumen de Ejecución desde Consola (Script Completo)
-Si deseas ver una demostración automática de **todos** estos conceptos (Consultas Derivadas, SQL Nativo, Lógica y Transacciones ACID) sin usar la API, puedes ejecutar el script preparado para este fin:
+## Resumen de Endpoints por Parte
 
-**Función:** Ejecuta `src/demo-queries.ts` que contiene ejemplos de código para cada uno de los 5 puntos solicitados.
-**Comando PowerShell:**
+| Parte | Consulta | Método | Endpoint |
+|-------|----------|--------|----------|
+| 1.1 | Estudiantes activos con carrera | GET | `/academic/students/status/active` |
+| 1.2 | Materias por carrera | GET | `/academic/subjects/career/:careerId` |
+| 1.3 | Docentes con múltiples asignaturas | GET | `/academic/teachers/status/multi-subject` |
+| 1.4 | Matrículas por estudiante/período | GET | `/academic/enrollments/student/:studentId/period/:periodId` |
+| 2.1 | Búsqueda avanzada estudiantes | GET | `/academic/students/search/advanced?careerId=X&periodId=Y` |
+| 2.2 | Filtro avanzado docentes | GET | `/academic/teachers/filter/advanced` |
+| 3.1 | Reporte nativo estudiantes | GET | `/academic/enrollments/report/native-stats` |
+| 4.1 | Crear matrícula (transacción) | POST | `/academic/enrollments` |
+
+---
+
+## Comandos de Verificación
+
+### Ver todos los estudiantes
 ```powershell
-npx ts-node src/demo-queries.ts
+Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/students"
+```
+
+### Ver todas las materias
+```powershell
+Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/subjects"
+```
+
+### Ver todos los docentes
+```powershell
+Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/teachers"
+```
+
+### Ver todas las matrículas
+```powershell
+Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/enrollments"
 ```
