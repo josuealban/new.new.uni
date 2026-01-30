@@ -1,0 +1,456 @@
+﻿{
+    "value":  [
+                  {
+                      "id":  2,
+                      "studentId":  1,
+                      "subjectId":  1,
+                      "academicPeriodId":  1,
+                      "enrolledAt":  "2026-01-28T21:07:01.680Z",
+                      "createdAt":  "2026-01-28T21:07:01.680Z",
+                      "updatedAt":  "2026-01-28T21:07:01.680Z",
+                      "student":  {
+                                      "id":  1,
+                                      "userId":  1,
+                                      "firstName":  "Josue",
+                                      "lastName":  "Alban",
+                                      "email":  "josue.alban@uni.edu",
+                                      "phone":  null,
+                                      "isActive":  true,
+                                      "careerId":  1,
+                                      "createdAt":  "2026-01-28T15:50:00.960Z",
+                                      "updatedAt":  "2026-01-28T15:50:00.960Z"
+                                  },
+                      "subject":  {
+                                      "id":  1,
+                                      "name":  "Programming I",
+                                      "credits":  5,
+                                      "maxQuota":  30,
+                                      "availableQuota":  24,
+                                      "careerId":  1,
+                                      "cycleId":  1,
+                                      "createdAt":  "2026-01-28T15:50:22.712Z",
+                                      "updatedAt":  "2026-01-30T16:47:41.080Z"
+                                  },
+                      "academicPeriod":  {
+                                             "id":  1,
+                                             "name":  "2026-1",
+                                             "startDate":  "2026-01-01T00:00:00.000Z",
+                                             "endDate":  "2026-06-30T00:00:00.000Z",
+                                             "isActive":  true,
+                                             "createdAt":  "2026-01-28T15:49:09.029Z",
+                                             "updatedAt":  "2026-01-28T15:49:09.029Z"
+                                         }
+                  },
+                  {
+                      "id":  3,
+                      "studentId":  2,
+                      "subjectId":  1,
+                      "academicPeriodId":  1,
+                      "enrolledAt":  "2026-01-30T12:44:15.533Z",
+                      "createdAt":  "2026-01-30T12:44:15.533Z",
+                      "updatedAt":  "2026-01-30T12:44:15.533Z",
+                      "student":  {
+                                      "id":  2,
+                                      "userId":  710541,
+                                      "firstName":  "Estudiante",
+                                      "lastName":  "Tx",
+                                      "email":  "tx.1769777055490@test.com",
+                                      "phone":  null,
+                                      "isActive":  true,
+                                      "careerId":  1,
+                                      "createdAt":  "2026-01-30T12:44:15.502Z",
+                                      "updatedAt":  "2026-01-30T12:44:15.502Z"
+                                  },
+                      "subject":  {
+                                      "id":  1,
+                                      "name":  "Programming I",
+                                      "credits":  5,
+                                      "maxQuota":  30,
+                                      "availableQuota":  24,
+                                      "careerId":  1,
+                                      "cycleId":  1,
+                                      "createdAt":  "2026-01-28T15:50:22.712Z",
+                                      "updatedAt":  "2026-01-30T16:47:41.080Z"
+                                  },
+                      "academicPeriod":  {
+                                             "id":  1,
+                                             "name":  "2026-1",
+                                             "startDate":  "2026-01-01T00:00:00.000Z",
+                                             "endDate":  "2026-06-30T00:00:00.000Z",
+                                             "isActive":  true,
+                                             "createdAt":  "2026-01-28T15:49:09.029Z",
+                                             "updatedAt":  "2026-01-28T15:49:09.029Z"
+                                         }
+                  },
+                  {
+                      "id":  4,
+                      "studentId":  3,
+                      "subjectId":  1,
+                      "academicPeriodId":  1,
+                      "enrolledAt":  "2026-01-30T12:57:28.159Z",
+                      "createdAt":  "2026-01-30T12:57:28.159Z",
+                      "updatedAt":  "2026-01-30T12:57:28.159Z",
+                      "student":  {
+                                      "id":  3,
+                                      "userId":  787458,
+                                      "firstName":  "Estudiante",
+                                      "lastName":  "Tx",
+                                      "email":  "tx.1769777848092@test.com",
+                                      "phone":  null,
+                                      "isActive":  true,
+                                      "careerId":  1,
+                                      "createdAt":  "2026-01-30T12:57:28.125Z",
+                                      "updatedAt":  "2026-01-30T12:57:28.125Z"
+                                  },
+                      "subject":  {
+                                      "id":  1,
+                                      "name":  "Programming I",
+                                      "credits":  5,
+                                      "maxQuota":  30,
+                                      "availableQuota":  24,
+                                      "careerId":  1,
+                                      "cycleId":  1,
+                                      "createdAt":  "2026-01-28T15:50:22.712Z",
+                                      "updatedAt":  "2026-01-30T16:47:41.080Z"
+                                  },
+                      "academicPeriod":  {
+                                             "id":  1,
+                                             "name":  "2026-1",
+                                             "startDate":  "2026-01-01T00:00:00.000Z",
+                                             "endDate":  "2026-06-30T00:00:00.000Z",
+                                             "isActive":  true,
+                                             "createdAt":  "2026-01-28T15:49:09.029Z",
+                                             "updatedAt":  "2026-01-28T15:49:09.029Z"
+                                         }
+                  },
+                  {
+                      "id":  5,
+                      "studentId":  4,
+                      "subjectId":  1,
+                      "academicPeriodId":  1,
+                      "enrolledAt":  "2026-01-30T13:02:02.735Z",
+                      "createdAt":  "2026-01-30T13:02:02.735Z",
+                      "updatedAt":  "2026-01-30T13:02:02.735Z",
+                      "student":  {
+                                      "id":  4,
+                                      "userId":  721789,
+                                      "firstName":  "Estudiante",
+                                      "lastName":  "Tx",
+                                      "email":  "tx.1769778122661@test.com",
+                                      "phone":  null,
+                                      "isActive":  true,
+                                      "careerId":  1,
+                                      "createdAt":  "2026-01-30T13:02:02.693Z",
+                                      "updatedAt":  "2026-01-30T13:02:02.693Z"
+                                  },
+                      "subject":  {
+                                      "id":  1,
+                                      "name":  "Programming I",
+                                      "credits":  5,
+                                      "maxQuota":  30,
+                                      "availableQuota":  24,
+                                      "careerId":  1,
+                                      "cycleId":  1,
+                                      "createdAt":  "2026-01-28T15:50:22.712Z",
+                                      "updatedAt":  "2026-01-30T16:47:41.080Z"
+                                  },
+                      "academicPeriod":  {
+                                             "id":  1,
+                                             "name":  "2026-1",
+                                             "startDate":  "2026-01-01T00:00:00.000Z",
+                                             "endDate":  "2026-06-30T00:00:00.000Z",
+                                             "isActive":  true,
+                                             "createdAt":  "2026-01-28T15:49:09.029Z",
+                                             "updatedAt":  "2026-01-28T15:49:09.029Z"
+                                         }
+                  },
+                  {
+                      "id":  6,
+                      "studentId":  5,
+                      "subjectId":  1,
+                      "academicPeriodId":  1,
+                      "enrolledAt":  "2026-01-30T13:04:29.032Z",
+                      "createdAt":  "2026-01-30T13:04:29.032Z",
+                      "updatedAt":  "2026-01-30T13:04:29.032Z",
+                      "student":  {
+                                      "id":  5,
+                                      "userId":  814285,
+                                      "firstName":  "Estudiante",
+                                      "lastName":  "Tx",
+                                      "email":  "tx.1769778268983@test.com",
+                                      "phone":  null,
+                                      "isActive":  true,
+                                      "careerId":  1,
+                                      "createdAt":  "2026-01-30T13:04:29.005Z",
+                                      "updatedAt":  "2026-01-30T13:04:29.005Z"
+                                  },
+                      "subject":  {
+                                      "id":  1,
+                                      "name":  "Programming I",
+                                      "credits":  5,
+                                      "maxQuota":  30,
+                                      "availableQuota":  24,
+                                      "careerId":  1,
+                                      "cycleId":  1,
+                                      "createdAt":  "2026-01-28T15:50:22.712Z",
+                                      "updatedAt":  "2026-01-30T16:47:41.080Z"
+                                  },
+                      "academicPeriod":  {
+                                             "id":  1,
+                                             "name":  "2026-1",
+                                             "startDate":  "2026-01-01T00:00:00.000Z",
+                                             "endDate":  "2026-06-30T00:00:00.000Z",
+                                             "isActive":  true,
+                                             "createdAt":  "2026-01-28T15:49:09.029Z",
+                                             "updatedAt":  "2026-01-28T15:49:09.029Z"
+                                         }
+                  },
+                  {
+                      "id":  7,
+                      "studentId":  1,
+                      "subjectId":  2,
+                      "academicPeriodId":  1,
+                      "enrolledAt":  "2026-01-30T14:33:45.723Z",
+                      "createdAt":  "2026-01-30T14:33:45.723Z",
+                      "updatedAt":  "2026-01-30T14:33:45.723Z",
+                      "student":  {
+                                      "id":  1,
+                                      "userId":  1,
+                                      "firstName":  "Josue",
+                                      "lastName":  "Alban",
+                                      "email":  "josue.alban@uni.edu",
+                                      "phone":  null,
+                                      "isActive":  true,
+                                      "careerId":  1,
+                                      "createdAt":  "2026-01-28T15:50:00.960Z",
+                                      "updatedAt":  "2026-01-28T15:50:00.960Z"
+                                  },
+                      "subject":  {
+                                      "id":  2,
+                                      "name":  "Mathematics I",
+                                      "credits":  4,
+                                      "maxQuota":  30,
+                                      "availableQuota":  29,
+                                      "careerId":  1,
+                                      "cycleId":  1,
+                                      "createdAt":  "2026-01-30T14:11:00.463Z",
+                                      "updatedAt":  "2026-01-30T16:28:12.981Z"
+                                  },
+                      "academicPeriod":  {
+                                             "id":  1,
+                                             "name":  "2026-1",
+                                             "startDate":  "2026-01-01T00:00:00.000Z",
+                                             "endDate":  "2026-06-30T00:00:00.000Z",
+                                             "isActive":  true,
+                                             "createdAt":  "2026-01-28T15:49:09.029Z",
+                                             "updatedAt":  "2026-01-28T15:49:09.029Z"
+                                         }
+                  },
+                  {
+                      "id":  9,
+                      "studentId":  1,
+                      "subjectId":  4,
+                      "academicPeriodId":  1,
+                      "enrolledAt":  "2026-01-30T16:35:37.600Z",
+                      "createdAt":  "2026-01-30T16:35:37.600Z",
+                      "updatedAt":  "2026-01-30T16:35:37.600Z",
+                      "student":  {
+                                      "id":  1,
+                                      "userId":  1,
+                                      "firstName":  "Josue",
+                                      "lastName":  "Alban",
+                                      "email":  "josue.alban@uni.edu",
+                                      "phone":  null,
+                                      "isActive":  true,
+                                      "careerId":  1,
+                                      "createdAt":  "2026-01-28T15:50:00.960Z",
+                                      "updatedAt":  "2026-01-28T15:50:00.960Z"
+                                  },
+                      "subject":  {
+                                      "id":  4,
+                                      "name":  "English I",
+                                      "credits":  3,
+                                      "maxQuota":  35,
+                                      "availableQuota":  34,
+                                      "careerId":  1,
+                                      "cycleId":  1,
+                                      "createdAt":  "2026-01-30T14:11:31.755Z",
+                                      "updatedAt":  "2026-01-30T16:35:37.607Z"
+                                  },
+                      "academicPeriod":  {
+                                             "id":  1,
+                                             "name":  "2026-1",
+                                             "startDate":  "2026-01-01T00:00:00.000Z",
+                                             "endDate":  "2026-06-30T00:00:00.000Z",
+                                             "isActive":  true,
+                                             "createdAt":  "2026-01-28T15:49:09.029Z",
+                                             "updatedAt":  "2026-01-28T15:49:09.029Z"
+                                         }
+                  },
+                  {
+                      "id":  10,
+                      "studentId":  1,
+                      "subjectId":  6,
+                      "academicPeriodId":  1,
+                      "enrolledAt":  "2026-01-30T16:35:56.123Z",
+                      "createdAt":  "2026-01-30T16:35:56.123Z",
+                      "updatedAt":  "2026-01-30T16:41:55.512Z",
+                      "student":  {
+                                      "id":  1,
+                                      "userId":  1,
+                                      "firstName":  "Josue",
+                                      "lastName":  "Alban",
+                                      "email":  "josue.alban@uni.edu",
+                                      "phone":  null,
+                                      "isActive":  true,
+                                      "careerId":  1,
+                                      "createdAt":  "2026-01-28T15:50:00.960Z",
+                                      "updatedAt":  "2026-01-28T15:50:00.960Z"
+                                  },
+                      "subject":  {
+                                      "id":  6,
+                                      "name":  "General Chemistry",
+                                      "credits":  4,
+                                      "maxQuota":  25,
+                                      "availableQuota":  24,
+                                      "careerId":  1,
+                                      "cycleId":  1,
+                                      "createdAt":  "2026-01-30T14:22:28.130Z",
+                                      "updatedAt":  "2026-01-30T16:41:55.507Z"
+                                  },
+                      "academicPeriod":  {
+                                             "id":  1,
+                                             "name":  "2026-1",
+                                             "startDate":  "2026-01-01T00:00:00.000Z",
+                                             "endDate":  "2026-06-30T00:00:00.000Z",
+                                             "isActive":  true,
+                                             "createdAt":  "2026-01-28T15:49:09.029Z",
+                                             "updatedAt":  "2026-01-28T15:49:09.029Z"
+                                         }
+                  },
+                  {
+                      "id":  11,
+                      "studentId":  6,
+                      "subjectId":  1,
+                      "academicPeriodId":  1,
+                      "enrolledAt":  "2026-01-30T16:47:41.086Z",
+                      "createdAt":  "2026-01-30T16:47:41.086Z",
+                      "updatedAt":  "2026-01-30T16:47:41.086Z",
+                      "student":  {
+                                      "id":  6,
+                                      "userId":  754218,
+                                      "firstName":  "Estudiante",
+                                      "lastName":  "Tx",
+                                      "email":  "tx.1769791661057@test.com",
+                                      "phone":  null,
+                                      "isActive":  true,
+                                      "careerId":  1,
+                                      "createdAt":  "2026-01-30T16:47:41.063Z",
+                                      "updatedAt":  "2026-01-30T16:47:41.063Z"
+                                  },
+                      "subject":  {
+                                      "id":  1,
+                                      "name":  "Programming I",
+                                      "credits":  5,
+                                      "maxQuota":  30,
+                                      "availableQuota":  24,
+                                      "careerId":  1,
+                                      "cycleId":  1,
+                                      "createdAt":  "2026-01-28T15:50:22.712Z",
+                                      "updatedAt":  "2026-01-30T16:47:41.080Z"
+                                  },
+                      "academicPeriod":  {
+                                             "id":  1,
+                                             "name":  "2026-1",
+                                             "startDate":  "2026-01-01T00:00:00.000Z",
+                                             "endDate":  "2026-06-30T00:00:00.000Z",
+                                             "isActive":  true,
+                                             "createdAt":  "2026-01-28T15:49:09.029Z",
+                                             "updatedAt":  "2026-01-28T15:49:09.029Z"
+                                         }
+                  },
+                  {
+                      "id":  12,
+                      "studentId":  7,
+                      "subjectId":  5,
+                      "academicPeriodId":  1,
+                      "enrolledAt":  "2026-01-30T16:55:39.930Z",
+                      "createdAt":  "2026-01-30T16:55:39.930Z",
+                      "updatedAt":  "2026-01-30T16:55:39.930Z",
+                      "student":  {
+                                      "id":  7,
+                                      "userId":  774540,
+                                      "firstName":  "Estudiante",
+                                      "lastName":  "Tx",
+                                      "email":  "tx.1769792139906@test.com",
+                                      "phone":  null,
+                                      "isActive":  true,
+                                      "careerId":  1,
+                                      "createdAt":  "2026-01-30T16:55:39.913Z",
+                                      "updatedAt":  "2026-01-30T16:55:39.913Z"
+                                  },
+                      "subject":  {
+                                      "id":  5,
+                                      "name":  "Calculus I",
+                                      "credits":  5,
+                                      "maxQuota":  30,
+                                      "availableQuota":  29,
+                                      "careerId":  1,
+                                      "cycleId":  1,
+                                      "createdAt":  "2026-01-30T14:22:27.894Z",
+                                      "updatedAt":  "2026-01-30T16:55:39.926Z"
+                                  },
+                      "academicPeriod":  {
+                                             "id":  1,
+                                             "name":  "2026-1",
+                                             "startDate":  "2026-01-01T00:00:00.000Z",
+                                             "endDate":  "2026-06-30T00:00:00.000Z",
+                                             "isActive":  true,
+                                             "createdAt":  "2026-01-28T15:49:09.029Z",
+                                             "updatedAt":  "2026-01-28T15:49:09.029Z"
+                                         }
+                  },
+                  {
+                      "id":  13,
+                      "studentId":  8,
+                      "subjectId":  7,
+                      "academicPeriodId":  1,
+                      "enrolledAt":  "2026-01-30T17:00:07.015Z",
+                      "createdAt":  "2026-01-30T17:00:07.015Z",
+                      "updatedAt":  "2026-01-30T17:00:07.015Z",
+                      "student":  {
+                                      "id":  8,
+                                      "userId":  819729,
+                                      "firstName":  "Estudiante",
+                                      "lastName":  "Tx",
+                                      "email":  "tx.1769792406992@test.com",
+                                      "phone":  null,
+                                      "isActive":  true,
+                                      "careerId":  1,
+                                      "createdAt":  "2026-01-30T17:00:06.998Z",
+                                      "updatedAt":  "2026-01-30T17:00:06.998Z"
+                                  },
+                      "subject":  {
+                                      "id":  7,
+                                      "name":  "Biology I",
+                                      "credits":  4,
+                                      "maxQuota":  25,
+                                      "availableQuota":  24,
+                                      "careerId":  1,
+                                      "cycleId":  1,
+                                      "createdAt":  "2026-01-30T14:22:28.249Z",
+                                      "updatedAt":  "2026-01-30T17:00:07.012Z"
+                                  },
+                      "academicPeriod":  {
+                                             "id":  1,
+                                             "name":  "2026-1",
+                                             "startDate":  "2026-01-01T00:00:00.000Z",
+                                             "endDate":  "2026-06-30T00:00:00.000Z",
+                                             "isActive":  true,
+                                             "createdAt":  "2026-01-28T15:49:09.029Z",
+                                             "updatedAt":  "2026-01-28T15:49:09.029Z"
+                                         }
+                  }
+              ],
+    "Count":  11
+}

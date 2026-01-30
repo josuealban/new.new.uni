@@ -1,35 +1,39 @@
 # Guía Maestra de Comandos PowerShell (Consulta y Gestión)
 
-Este documento es el catálogo definitivo de comandos para probar, gestionar y verificar todo el sistema académico desde PowerShell.
+> [!IMPORTANT]
+> **REGLA DE ORO:** Si un comando de creación (POST) falla con un **409 Conflict**, significa que el registro ya existe. Para la defensa, puedes simplemente usar los comandos de **Consulta (GET)**.
+
+---
+
+## ⚡ 0. ¡REINICIO TOTAL (Para una defensa limpia)!
+Si quieres que todos los IDs de la guía coincidan exactamente y la base de datos esté "como nueva", ejecuta estos dos comandos:
+
+```powershell
+# 1. Borra todo y recrea las tablas
+npx prisma db push --force-reset --schema=prisma/academic/schema-academic.prisma
+
+# 2. Inserta los datos maestros (Estudiantes, Carreras, Períodos)
+npx ts-node src/demo-queries.ts
+```
 
 ---
 
 ## 🛠️ 1. Configuración de Base y Datos de Prueba (Seeding)
-Usa estos comandos para preparar los datos iniciales recomendados para las demostraciones.
+Usa estos comandos **solo si no hiciste el reinicio total** arriba.
 
 ### 1.1 Crear Docente Principal (Juan Pérez)
+*Recuerda: El email y el userId deben ser únicos.*
 ```powershell
 $body = @{ 
-    userId = 100
+    userId = 999  # ID alto para evitar conflictos
     firstName = "Juan"
     lastName = "Perez"
-    email = "juan.perez@uni.edu"
+    email = "docente.test@uni.edu" # Email nuevo
     employmentType = "FULL_TIME"
     isActive = $true 
 } | ConvertTo-Json
 
 Invoke-RestMethod -Method Post -Uri "http://localhost:3000/academic/teachers" -Body $body -ContentType "application/json"
-```
-
-### 1.2 Crear Materias y Asignar Carga Académica
-```powershell
-# Crear Materia A
-$m1 = @{ name="Math I"; credits=4; maxQuota=30; availableQuota=30; careerId=1; cycleId=1 } | ConvertTo-Json
-$res1 = Invoke-RestMethod -Method Post -Uri "http://localhost:3000/academic/subjects" -Body $m1 -ContentType "application/json"
-
-# Asignar al docente (ID 1)
-$asig = @{ teacherId=1; subjectId=$res1.id } | ConvertTo-Json
-Invoke-RestMethod -Method Post -Uri "http://localhost:3000/academic/teacher-subjects" -Body $asig -ContentType "application/json"
 ```
 
 ---
@@ -44,16 +48,6 @@ Invoke-RestMethod -Method Post -Uri "http://localhost:3000/academic/teacher-subj
 | **Docente Multi-materia** | `Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/teachers/status/multi-subject"` |
 | **Matrículas Estudiante** | `Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/enrollments/student/1/period/1"` |
 
-### PARTE 2: Operaciones Lógicas (AND, OR, NOT)
-| Funcionalidad | Comando PowerShell |
-|---------------|-------------------|
-| **Búsqueda Estudiantes** | `Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/students/search/advanced?careerId=1&periodId=1"` |
-| **Filtro Docentes** | `Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/teachers/filter/advanced"` |
-
-### PARTE 3: Consultas Nativas (SQL Puro)
-| Funcionalidad | Comando PowerShell |
-|---------------|-------------------|
-| **Reporte de Estudiantes**| `Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/enrollments/report/native-stats"` |
 
 ---
 
@@ -62,20 +56,22 @@ Comandos para demostrar la integridad de datos en procesos críticos.
 
 ### 3.1 Realizar Matriculación (Crear)
 ```powershell
-$body = @{ studentId = 1; subjectId = 1; academicPeriodId = 1 } | ConvertTo-Json
+# Intentar matricular al estudiante 1 en materia 5 (ya que 1, 2, 3 y 4 ya están ocupadas por el seeder)
+$body = @{ studentId = 1; subjectId = 5; academicPeriodId = 1 } | ConvertTo-Json
 Invoke-RestMethod -Method Post -Uri "http://localhost:3000/academic/enrollments" -Body $body -ContentType "application/json"
 ```
 
-### 3.2 Cambio de Materia (Update con Traspaso de Cupos)
+### 3.2 Cambio de Materia (PATCH)
 ```powershell
-# Cambiar matrícula ID 1 a materia ID 2 (Descuenta en materia 2 y devuelve a materia 1)
-$body = @{ subjectId = 2 } | ConvertTo-Json
-Invoke-RestMethod -Method Patch -Uri "http://localhost:3000/academic/enrollments/1" -Body $body -ContentType "application/json"
+# Cambiar la matrícula ID 2 (del estudiante 1) a la materia ID 3 (Physics I)
+$body = @{ subjectId = 3 } | ConvertTo-Json
+Invoke-RestMethod -Method Patch -Uri "http://localhost:3000/academic/enrollments/2" -Body $body -ContentType "application/json"
 ```
 
-### 3.3 Anular Matrícula (Delete con Devolución de Cupo)
+### 3.3 Anular Matrícula (Delete)
 ```powershell
-Invoke-RestMethod -Method Delete -Uri "http://localhost:3000/academic/enrollments/1"
+# Eliminar la matrícula ID 2
+Invoke-RestMethod -Method Delete -Uri "http://localhost:3000/academic/enrollments/2"
 ```
 
 ---
