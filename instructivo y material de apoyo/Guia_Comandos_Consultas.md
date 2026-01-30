@@ -149,6 +149,15 @@ Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/subjects"
 Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/teachers"
 ```
 
+### Ver materias de un docente específico
+```powershell
+# Materias que dicta el docente con ID 1
+Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/teachers/1"
+
+# Materias que dicta el docente con ID 2
+Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/teachers/2"
+```
+
 ### Ver todas las matrículas
 ```powershell
 Invoke-RestMethod -Method Get -Uri "http://localhost:3000/academic/enrollments"
